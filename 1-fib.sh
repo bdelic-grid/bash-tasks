@@ -1,9 +1,9 @@
 #!/bin/bash
 
 fib_rec() {
-	if [ $1 -eq 0 ]; then
+	if [ "$1" -eq 0 ]; then
 		echo 0
-	elif [ $1 -eq 1 ]; then
+	elif [ "$1" -eq 1 ]; then
 		echo 1
 	else
 		local tmp1=$(fib_rec $(( $1 - 1 )))
@@ -24,6 +24,12 @@ fib() {
 	echo $a
 }
 
-fib_rec $1
+echo "Enter the Fibonacci index:"
+read -r n
 
+res=$( fib "$n" )
+res_rec=$( fib_rec "$n" )
+
+echo "Fibonacci $n = $res"
+echo "Fibonacci recursive $n = $res_rec"
 
