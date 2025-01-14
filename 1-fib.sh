@@ -27,6 +27,11 @@ fib() {
 echo "Enter the Fibonacci index:"
 read -r n
 
+if [ "$n" -lt 0 ]; then
+	echo "Please enter a positive number"
+	exit 1
+fi
+
 res=$( fib "$n" )
 res_rec=$( fib_rec "$n" )
 
