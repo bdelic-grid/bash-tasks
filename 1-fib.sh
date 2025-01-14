@@ -13,10 +13,10 @@ fib_rec() {
 }
 
 fib() {
-	a=0
-	b=1
+	local a=0
+	local b=1
 	for (( i = 0; i < $1; i++ )) ; do
-		tmp=$(( a + b ))
+		local tmp=$(( a + b ))
 		a=$b
 		b=$tmp
 	done
