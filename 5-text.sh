@@ -24,9 +24,9 @@ while getopts ":i:o:s:vrlu" opt; do
 		# substiture wordA with wordB
 	    s)
 			array+=("$OPTARG")
-			while [ "$OPTIND" -le "$#" ] && [ "${!OPTDIND:0:1}" != "-" ]; do
+			while [ "$OPTIND" -le "$#" ] && [ "${!OPTIND:0:1}" != "-" ]; do
 					array+=("${!OPTIND}")
-					OPTIND="$(expr $OPTIND \+ 1)"
+					OPTIND="$(expr "$OPTIND" \+ 1)"
 			done
 			AFTER=$(echo "$INPUTTEXT" | sed "s/${array[0]}/${array[1]}/g")
 			echo "$AFTER" > "$OUTPUT"
