@@ -37,8 +37,8 @@ if [[ "$SHIFT" -gt 25 ]]; then
 fi
 
 INPUTTEXT=""
-while IFS="" read -r line; do
-	INPUTTEXT+="$line"
+while IFS='' read -r line; do
+	INPUTTEXT+="$line\\n"
 done < "$INPUT"
 
 # no need to shift if $SHIFT is 0 (or any product of 26) 
@@ -57,8 +57,10 @@ for(( i=0; i < ${#INPUTTEXT}; i++ )); do
 		ascii=$(printf "%d" "'$char")
 
 		if [[ "$char" =~ [A-Z] ]]; then
+			# uppercase	
 			base=65
 		else
+			# lowercase	
 			base=97
 		fi
 
