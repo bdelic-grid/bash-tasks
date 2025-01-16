@@ -48,6 +48,7 @@ while getopts ":i:o:s:vrlu" opt; do
 			;;
 		\?)
 		    echo "Invalid argument passed"
-		    ;;
-     esac
+		    exit 1
+			;;
+		esac
 done
