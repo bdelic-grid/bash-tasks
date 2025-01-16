@@ -34,7 +34,6 @@ while getopts ":i:o:s:vrlu" opt; do
 		# reverse text lines
 		r)
 			awk '{lines[NR] = $0} END {for (i = NR; i > 0; i--) print lines[i]}' "$INPUT" > "$OUTPUT"
-		    echo "Passed operator: $opt"
 		   	;;
 		# convert all text to lower case
 		l)
