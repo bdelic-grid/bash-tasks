@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# USAGE: ./1-fib.sh - reads n and returns n-th member of Fibonacci array
+
 fib_rec() {
 	if [[ "$1" -eq 0 ]]; then
 		echo 0

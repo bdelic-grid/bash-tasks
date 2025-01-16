@@ -1,4 +1,8 @@
 #!/bin/bash 
+#
+# USAGE: ./2-ops.sh -o <operator> -n [<number>] -d?
+# applies operator(+, -, *, %) to the array of numbers; * must be escaped when used!
+# -d - optional flag that prints username, script name, operation and array numbers
 
 while getopts "o:n:d" opt; do
 		case $opt in
