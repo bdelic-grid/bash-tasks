@@ -25,6 +25,11 @@ while getopts ":s:i:o:" opt; do
   esac
 done
 
+if [[ ! "${#@}" -eq 6 ]]; then
+    echo "Number of arguments is not valid!"
+	exit 3
+fi
+
 if [[ ! -f "$INPUT" ]]; then
 	echo "Input file does not exist!"
 	exit 2
