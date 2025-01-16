@@ -1,9 +1,9 @@
 #!/bin/bash
 
 fib_rec() {
-	if [ "$1" -eq 0 ]; then
+	if [[ "$1" -eq 0 ]]; then
 		echo 0
-	elif [ "$1" -eq 1 ]; then
+	elif [[ "$1" -eq 1 ]]; then
 		echo 1
 	else
 		local tmp1=$(fib_rec $(( $1 - 1 )))
@@ -27,7 +27,7 @@ fib() {
 echo "Enter the Fibonacci index:"
 read -r n
 
-if [ "$n" -lt 0 ]; then
+if [[ "$n" -lt 0 ]]; then
 	echo "Please enter a positive number"
 	exit 1
 fi
