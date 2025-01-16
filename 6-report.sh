@@ -22,7 +22,7 @@ echo "Disk size and free space: ${DISKINFO[1]} ${DISKINFO[3]}"
 MEM="$(top -l 1 | grep PhysMem)"
 # remove trailing dot
 MEM=${MEM%?}
-echo $MEM
+echo "$MEM"
 
 NOFCORES=$(sysctl -n hw.ncpu)
 echo "Number of cores: $NOFCORES"

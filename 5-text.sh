@@ -43,13 +43,13 @@ while getopts ":i:o:s:vrlu" opt; do
 			;;
 		# replace lowercase with uppercase and vice versa
     	v)
-			checkNoArguments 5 $@			
+			checkNoArguments 5 "$@"			
 			INPUTTEXT=$(echo "$INPUTTEXT" | tr '[:upper:][:lower:]' '[:lower:][:upper:]')
 			echo "$INPUTTEXT" > "$OUTPUT"
 			;;
 		# substiture wordA with wordB
 	    s)
-			checkNoArguments 6 $@	
+			checkNoArguments 6 "$@"	
 			array+=("$OPTARG")
 			while [ "$OPTIND" -le "$#" ] && [ "${!OPTIND:0:1}" != "-" ]; do
 					array+=("${!OPTIND}")
@@ -60,18 +60,18 @@ while getopts ":i:o:s:vrlu" opt; do
 			;;
 		# reverse text lines
 		r)
-			checkNoArguments 5 $@	
+			checkNoArguments 5 "$@"	
 			awk '{lines[NR] = $0} END {for (i = NR; i > 0; i--) print lines[i]}' "$INPUT" > "$OUTPUT"
 		   	;;
 		# convert all text to lower case
 		l)
-			checkNoArguments 5 $@	
+			checkNoArguments 5 "$@"	
 			INPUTTEXT=$(echo "$INPUTTEXT" | tr '[:upper:]' '[:lower:]')
 			echo "$INPUTTEXT" > "$OUTPUT"
 			;;
 		# convert all text to upper case
 		u)
-			checkNoArguments $@	
+			checkNoArguments "$@"	
 			INPUTTEXT=$(echo "$INPUTTEXT" | tr '[:lower:]' '[:upper:]')
 			echo "$INPUTTEXT" > "$OUTPUT"
 			;;
