@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# USAGE ./5-text.sh -i <input_file> -o <output_file> [vsrlu]?
+# v - replaces lowercase with uppercase and vice versa
+# -s <word_a> <word_b> - replaces <word_a> with <word_b>
+# -r - reverses text lines
+# -l - converts all to lowercase
+# -u - converts all to uppercase
+
 while getopts ":i:o:s:vrlu" opt; do
     case $opt in
 		# input file

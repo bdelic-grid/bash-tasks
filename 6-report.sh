@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# USAGE: ./6-report.sh - prints current date and time, name of current user, internal and external IPs, hostname, name and version of OS distribution, uptime, info about used and free disk space, info about total and free RAM, number and frequency of CPU cores
+
 echo "Date: $(date)"
 echo "User: $(whoami)"
 echo "Internal IP and hostname: $(ipconfig getifaddr en0) $(hostname)"

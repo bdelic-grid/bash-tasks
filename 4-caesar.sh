@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# USAGE ./4-caesar.sh -i <input_file> -o <output_file> -s <number> - reads file from input_file, shifts text and outputs to output_file
+# shifting can be done either to the right (using a positive <number>), or to the left (using a negative <number>)
+
 while getopts ":s:i:o:" opt; do
   case $opt in
     s)
