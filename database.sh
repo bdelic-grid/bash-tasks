@@ -12,18 +12,6 @@
 # 10-20 - error working with DB
 # 20-30 - error working row/column size 
 
-function create_db {
-		local DBPATH="$1"
-		
-		if [[ -d "$DBPATH" ]]; then
-				echo "DB already exists!"
-				exit 11
-		fi
-
-		mkdir "./$DBPATH"
-		echo "DB created!"
-}
-
 # checks if DB exists
 function checkIfDBExists {
 		local DBPATH="$1"
@@ -170,17 +158,21 @@ function delete_data {
 		checkIfDBExists "$DBPATH"
 		checkIfTableNExists "$TABLENAME"
 
-		local FIELD=$(echo "$CONDITION" | cut -d'=' -f1)
-		local VALUE=$(echo "$CONDITION" | cut -d'=' -f2)
+		local FIELD
+		FIELD=$(echo "$CONDITION" | cut -d'=' -f1)
+		local VALUE
+		VALUE=$(echo "$CONDITION" | cut -d'=' -f2)
 
-		local COLUMNNUMBER=$(head -n 1 "$DBPATH/$TABLENAME.txt" | tr -s ' ' | tr '|' '\n' | nl -v 0 | grep -w "$FIELD" | cut -f1 | xargs)
+		local COLUMNNUMBER
+		COLUMNNUMBER=$(head -n 1 "$DBPATH/$TABLENAME.txt" | tr -s ' ' | tr '|' '\n' | nl -v 0 | grep -w "$FIELD" | cut -f1 | xargs) 
 		if [[ -z "$COLUMNNUMBER" ]]; then
 				echo "There is no field $FIELD in table $TABLE!"
 				exit 15
 		fi
 
 		local FILE="$DBPATH/$TABLENAME.txt"
-		local TEMP=$(mktemp)
+		local TEMP
+		TEMP=$(mktemp)
 
 		# copy header
 		head -n 1 "$FILE" > "$TEMP"
@@ -215,24 +207,24 @@ function delete_data {
 # ---------------------MAIN---------------------
 case $1 in
 		create_db)
-				checkNoArguments 2 $@
-				create_db $2
+				checkNoArguments 2 "$@"
+				create_db "$2"
 				;;
 		create_table)
-				checkMinArguments 4 $@
-				create_table $@ 
+				checkMinArguments 4 "$@"
+				create_table "$@"
 				;;
 		insert_data)
-				checkMinArguments 4 $@
-				insert_data $@
+				checkMinArguments 4 "$@"
+				insert_data "$@"
 				;;
 		select_data)
-				checkNoArguments 3 $@
-				select_data $@
+				checkNoArguments 3 "$@"
+				select_data "$@"
 				;;
 		delete_data)
-				checkNoArguments 4 $@
-				delete_data $@
+				checkNoArguments 4 "$@"
+				delete_data "$@"
 				;;
 		*)
 				echo "Invalid option"
