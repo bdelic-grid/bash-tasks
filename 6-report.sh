@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 echo "Date: $(date)"
 echo "User: $(whoami)"
 echo "Internal IP and hostname: $(ipconfig getifaddr en0) $(hostname)"
