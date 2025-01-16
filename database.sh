@@ -8,9 +8,9 @@
 # ./database.sh delete_data <db_name> <table_name> <condition>	- deletes a row from table_name.txt based on the condition, any column can be given in condition
 #
 # ERROR CODES EXPLAINED:
-# 1-10 
-# 10-20 
-# 20-30 
+# 1-10 - error with arguments 
+# 10-20 - error working with DB
+# 20-30 - error working row/column size 
 
 function create_db {
 		local DBPATH="$1"
@@ -176,7 +176,7 @@ function delete_data {
 		local COLUMNNUMBER=$(head -n 1 "$DBPATH/$TABLENAME.txt" | tr -s ' ' | tr '|' '\n' | nl -v 0 | grep -w "$FIELD" | cut -f1 | xargs)
 		if [[ -z "$COLUMNNUMBER" ]]; then
 				echo "There is no field $FIELD in table $TABLE!"
-				exit 22
+				exit 15
 		fi
 
 		local FILE="$DBPATH/$TABLENAME.txt"
