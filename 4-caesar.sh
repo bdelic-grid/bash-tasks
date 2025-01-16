@@ -36,10 +36,7 @@ if [[ "$SHIFT" -gt 25 ]]; then
 	SHIFT=$((SHIFT % 26))
 fi
 
-INPUTTEXT=""
-while IFS='' read -r line; do
-	INPUTTEXT+="$line\\n"
-done < "$INPUT"
+INPUTTEXT="$(cat "$INPUT")"
 
 # no need to shift if $SHIFT is 0 (or any product of 26) 
 if [[ "$SHIFT" -eq 0 ]]; then
