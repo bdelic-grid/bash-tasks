@@ -49,7 +49,7 @@ while getopts ":i:o:s:vrlu" opt; do
 			;;
 		# substiture wordA with wordB
 	    s)
-			checkNoArguments 6 "$@"	
+			checkNoArguments 7 "$@"	
 			array+=("$OPTARG")
 			while [ "$OPTIND" -le "$#" ] && [ "${!OPTIND:0:1}" != "-" ]; do
 					array+=("${!OPTIND}")
