@@ -7,7 +7,7 @@ for ((i=1; i<=100; i++)); do
 		echo "$i: Fizz Buzz"
 	elif [[ $(( i % 3 )) -eq 0 ]]; then
 		echo "$i: Fizz"
-	else
+	elif [[ $(( i % 5 )) -eq 0 ]]; then
 		echo "$i: Buzz"
 	fi
 done
