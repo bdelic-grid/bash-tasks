@@ -71,7 +71,7 @@ while getopts ":i:o:s:vrlu" opt; do
 			;;
 		# convert all text to upper case
 		u)
-			checkNoArguments "$@"	
+			checkNoArguments 5 "$@"	
 			INPUTTEXT=$(echo "$INPUTTEXT" | tr '[:lower:]' '[:upper:]')
 			echo "$INPUTTEXT" > "$OUTPUT"
 			;;
