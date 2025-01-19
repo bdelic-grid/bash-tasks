@@ -213,7 +213,7 @@ function delete_data {
 						fi
 				done
 		done
-		echo "$FILE"	
+		
 		mv "$TEMP" "$FILE"
 }
 
