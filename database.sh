@@ -124,10 +124,19 @@ function insert_data {
 
 		checkIfDBExists "$DBPATH"
 		checkIfTableNExists "$TABLENAME"
-	
-		# TODO check if the given row has the correct format
+
+		local HEADER=$(head -n 1 "$DBPATH/$TABLENAME.txt")
+		local rowCount=$(echo "$HEADER" | tr -cd '|' | wc -c)
+		# one more row than the number of | 
+		rowCount=$((rowCount + 1))
+		# -3 for insert_data, DBPATH, FILENAME as command line arguments
+		if [[ ! $rowCount -eq $#-3 ]]; then
+			echo "Given number of values does not correspond to the number of columns in the table! Row not inserted."
+			exit 15
+		fi
 
 		local FIELDS=()
+		# start from 4 to skip insert_data, DBPATH, FILENAME command line arguments
 		for((i=4; i<=$#; i++)); do
 				FIELDS+=("${!i}")
 				checkFieldLength "${!i}"
