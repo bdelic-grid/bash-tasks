@@ -1,16 +1,16 @@
 #!/bin/bash
 # 
 # USAGE:
-# ./database.sh create_db <db_name>								- creates a directory with a name db_name
-# ./database.sh create_table <db_name> <table_name> [<row>]		- creates a txt file in ./db_name/table_name.txt with a header consisting of given rows
-# ./database.sh insert_data <db_name> <table_name> [<value>]	- inserts values to table_name.txt
-# ./database.sh select_data <db_name> <table_name>				- prints table_name.txt
-# ./database.sh delete_data <db_name> <table_name> <condition>	- deletes a row from table_name.txt based on the condition, any column can be given in condition
+# ./database.sh create_db <db_name>				 - creates a directory with a name db_name
+# ./database.sh create_table <db_name> <table_name> [<columns>] - creates a txt file ./db_name/table_name.txt with a header consisting of given columns
+# ./database.sh insert_data <db_name> <table_name> [<values>]	 - inserts values to table_name.txt; separate values using space
+# ./database.sh select_data <db_name> <table_name>		 - prints table_name.txt
+# ./database.sh delete_data <db_name> <table_name> <condition>	 - deletes a row from table_name.txt based on the condition, any column can be given in condition; condition format: column=value
 #
 # ERROR CODES EXPLAINED:
 # 1-10 - error with arguments 
 # 10-20 - error working with DB
-# 20-30 - error working row/column size 
+# 20-30 - error with row/field size 
 
 # checks if DB exists
 function checkIfDBExists {
@@ -125,7 +125,18 @@ function insert_data {
 		checkIfDBExists "$DBPATH"
 		checkIfTableNExists "$TABLENAME"
 
+		local HEADER=$(head -n 1 "$DBPATH/$TABLENAME.txt")
+		local rowCount=$(echo "$HEADER" | tr -cd '|' | wc -c)
+		# one more row than the number of | 
+		rowCount=$((rowCount + 1))
+		# -3 for insert_data, DBPATH, FILENAME as command line arguments
+		if [[ ! $rowCount -eq $#-3 ]]; then
+			echo "Given number of values does not correspond to the number of columns in the table! Row not inserted."
+			exit 15
+		fi
+
 		local FIELDS=()
+		# start from 4 to skip insert_data, DBPATH, FILENAME command line arguments
 		for((i=4; i<=$#; i++)); do
 				FIELDS+=("${!i}")
 				checkFieldLength "${!i}"
@@ -182,24 +193,28 @@ function delete_data {
 				for i in "${!columns[@]}"; do
 						if [[ $i -eq $COLUMNNUMBER ]]; then
 								local col=""
-								if [[ ${columns[$i]} == \** ]]; then
-										col="${columns[$i]#\*\*}"
-								elif [[ ${columns[$i]} == *\* ]]; then 	
-										col="${columns[$i]%\*\*}"
+								# remove leading stars
+								if [[ ${columns[$i]} == \*\** ]]; then
+									col="${columns[$i]#\*\*}"
+								#remove trailing stars
+								elif [[ ${columns[$i]} == *\*\* ]]; then 	
+									col="${columns[$i]%\*\*}"
 								else
-										col="${columns[$i]}"
+									col="${columns[$i]}"
 								fi
-
-								if [[ ! $col -eq $VALUE ]]; then
-										echo "$line" >> "$TEMP"
+								
+								# trim
+								col=$(echo "$col" | xargs)
+								VALUE=$(echo "$VALUE" | xargs)
+	
+								if [[ ! $col == $VALUE ]]; then
+									echo "$line" >> "$TEMP"
 								fi
 						fi
 				done
 		done
-
+		echo "$FILE"	
 		mv "$TEMP" "$FILE"
-
-		echo "Row(s) deleted"
 }
 
 
