@@ -185,6 +185,10 @@ function delete_data {
 		local TEMP
 		TEMP=$(mktemp)
 
+		local DELETED
+		DELETED=$(mktemp)
+		echo "0" > "$DELETED"
+
 		# copy header
 		head -n 1 "$FILE" > "$TEMP"
 
@@ -209,12 +213,22 @@ function delete_data {
 	
 								if [[ ! $col == $VALUE ]]; then
 									echo "$line" >> "$TEMP"
+								else
+									echo "1" > "$DELETED"
 								fi
 						fi
 				done
 		done
-		
+
+		if [[ "$(cat "$DELETED")" -eq 1 ]]; then
+			echo "Row(s)" deleted
+		else
+			echo "No matching values to delete"
+		fi
+
 		mv "$TEMP" "$FILE"
+		
+		rm "$DELETED"
 }
 
 
